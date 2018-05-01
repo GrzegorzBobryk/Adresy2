@@ -25,8 +25,8 @@ public class Adresy {
 
     private static void insertData() {
         InsertDataInToDB insert = new InsertDataInToDB();
-        for (int i = 0; i < addressResponseList.size(); i++) {
-            insert.insertAdres(addressResponseList.get(i).getAddress().getCounty(), addressResponseList.get(i).getAddress().getRoad(), addressResponseList.get(i).getAddress().getPostalcode(), addressResponseList.get(i).getAddress().getState());
+        for (AddressResponse anAddressResponseList : addressResponseList) {
+            insert.insertAdres(anAddressResponseList.getAddress().getCounty(), anAddressResponseList.getAddress().getRoad(), anAddressResponseList.getAddress().getPostalcode(), anAddressResponseList.getAddress().getState());
         }
         insert.closeConnection();
     }

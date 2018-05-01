@@ -28,20 +28,19 @@ public class InsertDataInToDB {
         createTable();
     }
 
-    private boolean createTable() {
-        String createAddress = "CREATE TABLE IF NOT EXISTS adresy (place_id INTEGER PRIMARY KEY AUTOINCREMENT, county varchar(255),road varchar(255),postalcode varchar(255),state varchar(255))";
+    private void createTable() {
+        String createAddress = "CREATE TABLE IF NOT EXISTS adresy (place_id INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                "county varchar(255),road varchar(255),postalcode varchar(255),state varchar(255))";
         try {
             stat.execute(createAddress);
         } catch (SQLException e) {
             System.err.println("Blad przy tworzeniu tabeli");
             e.printStackTrace();
-            return false;
         }
-        return true;
     }
 
 
-    public boolean insertAdres(String county, String road, String postalcode, String state) {
+    public void insertAdres(String county, String road, String postalcode, String state) {
         try {
             PreparedStatement prepStmt = conn.prepareStatement(
                     "insert into adresy values (NULL,?, ?, ?, ?);");
@@ -52,9 +51,7 @@ public class InsertDataInToDB {
             prepStmt.execute();
         } catch (SQLException e) {
             System.err.println("Blad przy dodawaniu");
-            return false;
         }
-        return true;
     }
 
     public void closeConnection() {
