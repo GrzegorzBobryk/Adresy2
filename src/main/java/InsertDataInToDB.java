@@ -29,7 +29,7 @@ public class InsertDataInToDB {
     }
 
     private boolean createTable() {
-        String createAddress = "CREATE TABLE IF NOT EXISTS adresy (place_id INTEGER PRIMARY KEY, display_name varchar(255))";
+        String createAddress = "CREATE TABLE IF NOT EXISTS adresy (place_id INTEGER PRIMARY KEY AUTOINCREMENT, county varchar(255),road varchar(255),postalcode varchar(255),state varchar(255))";
         try {
             stat.execute(createAddress);
         } catch (SQLException e) {
@@ -41,12 +41,14 @@ public class InsertDataInToDB {
     }
 
 
-    public boolean insertAdres(int id, String name) {
+    public boolean insertAdres(String county, String road, String postalcode, String state) {
         try {
             PreparedStatement prepStmt = conn.prepareStatement(
-                    "insert into adresy values (?, ?);");
-            prepStmt.setInt(1, id);
-            prepStmt.setString(2, name);
+                    "insert into adresy values (NULL,?, ?, ?, ?);");
+            prepStmt.setString(1, county);
+            prepStmt.setString(2, road);
+            prepStmt.setString(3, postalcode);
+            prepStmt.setString(4, state);
             prepStmt.execute();
         } catch (SQLException e) {
             System.err.println("Blad przy dodawaniu");

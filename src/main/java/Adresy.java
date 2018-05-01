@@ -19,16 +19,14 @@ public class Adresy {
     public static void main(String[] args) {
         readCSV();
         requestForAddress(latList, loanList);
-        for (AddressResponse anAddressResponseList : addressResponseList) {
-            System.out.println(anAddressResponseList.getPlace_id());
-        }
         insertData();
     }
+
 
     private static void insertData() {
         InsertDataInToDB insert = new InsertDataInToDB();
         for (int i = 0; i < addressResponseList.size(); i++) {
-            insert.insertAdres(addressResponseList.get(i).getPlace_id(), addressResponseList.get(i).getDisplay_name());
+            insert.insertAdres(addressResponseList.get(i).getAddress().getCounty(), addressResponseList.get(i).getAddress().getRoad(), addressResponseList.get(i).getAddress().getPostalcode(), addressResponseList.get(i).getAddress().getState());
         }
         insert.closeConnection();
     }
