@@ -1,7 +1,7 @@
 import java.sql.*;
 
 
-public class InsertDataInToDB {
+class InsertDataInToDB {
 
     private static final String DRIVER = "org.sqlite.JDBC";
     private static final String DB_URL = "jdbc:sqlite:adresy.db";
@@ -9,7 +9,7 @@ public class InsertDataInToDB {
     private Connection conn;
     private Statement stat;
 
-    public InsertDataInToDB() {
+    InsertDataInToDB() {
         try {
             Class.forName(InsertDataInToDB.DRIVER);
         } catch (ClassNotFoundException e) {
@@ -40,7 +40,7 @@ public class InsertDataInToDB {
     }
 
 
-    public void insertAdres(String county, String road, String postalcode, String state) {
+    void insertAdres(String county, String road, String postalcode, String state) {
         try {
             PreparedStatement prepStmt = conn.prepareStatement(
                     "insert into adresy values (NULL,?, ?, ?, ?);");
@@ -54,7 +54,7 @@ public class InsertDataInToDB {
         }
     }
 
-    public void closeConnection() {
+    void closeConnection() {
         try {
             conn.close();
         } catch (SQLException e) {

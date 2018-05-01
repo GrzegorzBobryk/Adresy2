@@ -4,7 +4,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.client.RestTemplate;
 
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -26,7 +25,12 @@ public class Adresy {
     private static void insertData() {
         InsertDataInToDB insert = new InsertDataInToDB();
         for (AddressResponse anAddressResponseList : addressResponseList) {
-            insert.insertAdres(anAddressResponseList.getAddress().getCounty(), anAddressResponseList.getAddress().getRoad(), anAddressResponseList.getAddress().getPostalcode(), anAddressResponseList.getAddress().getState());
+            insert.insertAdres(
+                    anAddressResponseList.getAddress().getCounty(),
+                    anAddressResponseList.getAddress().getRoad(),
+                    anAddressResponseList.getAddress().getPostalcode(),
+                    anAddressResponseList.getAddress().getState()
+            );
         }
         insert.closeConnection();
     }
@@ -34,7 +38,15 @@ public class Adresy {
     private static void requestForAddress(ArrayList<String> latList, ArrayList<String> loanList) {
         for (int i = 0; i < latList.size(); i++) {
             RestTemplate restTemplate = new RestTemplate();
-            addressResponseList.add(restTemplate.getForObject("http://geo2.osm.gpsserwer.pl/reverse.php?format=json&lat=" + latList.get(i) + "&lon=" + loanList.get(i), AddressResponse.class));
+            addressResponseList.add(
+                    restTemplate.getForObject(
+                            "http://geo2.osm.gpsserwer.pl/reverse.php?format=json&lat=" +
+                                    latList.get(i) +
+                                    "&lon=" +
+                                    loanList.get(i),
+                            AddressResponse.class
+                    )
+            );
             log.info(addressResponseList.get(i).toString());
         }
     }
@@ -55,8 +67,6 @@ public class Adresy {
                 loanList.add(addrresFromCSV[1]);
             }
 
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
